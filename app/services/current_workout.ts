@@ -1,7 +1,11 @@
 import {Injectable} from "angular2/core";
 
+// import Local services
+import {LogService} from "./log"
+import {CurrentPlanService} from "./current_plan"
+
 @Injectable()
-export class LogService {
+export class CurrentWorkoutService {
     // define properties
     name: String;
     exercises:Array<Exercise>;
@@ -9,8 +13,8 @@ export class LogService {
     constructor() {
     }
     
-    // sets data for current workout
-    set(name:string){
+    // init workout service
+    init(){
         
     }
 

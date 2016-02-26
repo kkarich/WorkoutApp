@@ -1,6 +1,6 @@
 import {Page} from 'ionic-framework/ionic';
 
-import{LogService} from '../../services/log/log';
+import{LogService} from '../../services/log';
 
 
 @Page({
@@ -9,7 +9,6 @@ import{LogService} from '../../services/log/log';
 export class HomePage {
     log: LogService;
     constructor(log:LogService) {
-        this.log = log;
-        this.log.logWorkout(1);
+        this.log = log;   
     }
 }
