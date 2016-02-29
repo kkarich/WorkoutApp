@@ -1,6 +1,7 @@
 import {Page} from 'ionic-framework/ionic';
 
 import{LogService} from '../../services/log';
+import{CurrentWorkoutService} from '../../services/current_workout';
 
 
 @Page({
@@ -8,7 +9,9 @@ import{LogService} from '../../services/log';
 })
 export class HomePage {
     log: LogService;
-    constructor(log:LogService) {
+    currentWorkout:CurrentWorkoutService;
+    constructor(log:LogService,CurrentWorkout:CurrentWorkoutService) {
         this.log = log;   
+        this.currentWorkout = CurrentWorkout;
     }
 }

@@ -1,14 +1,19 @@
 import {App, IonicApp, Platform} from 'ionic-framework/ionic';
 
+// Import my pages
 import {HomePage} from './pages/home/home';
+
+// Import My Services
 import {LogService} from './services/log';
+import {CurrentPlanService} from './services/current_plan';
+import {CurrentWorkoutService} from './services/current_workout';
 
 // https://angular.io/docs/ts/latest/api/core/Type-interface.html
 import {Type} from 'angular2/core';
 
 @App({
   templateUrl: 'build/app.html',
-  providers:[LogService],
+  providers:[LogService,CurrentPlanService,CurrentWorkoutService],
   config: {} // http://ionicframework.com/docs/v2/api/config/Config/
 })
 class MyApp {
