@@ -2,6 +2,7 @@ import {App, IonicApp, Platform} from 'ionic-framework/ionic';
 
 // Import my pages
 import {HomePage} from './pages/home/home';
+import {WorkoutPage} from './pages/workout/workout';
 
 // Import My Services
 import {LogService} from './services/log';
@@ -19,19 +20,23 @@ import {Type} from 'angular2/core';
 class MyApp {
   rootPage: Type = HomePage;
   pages: Array<{title: string, component: Type}>
-
-  constructor(private app: IonicApp, private platform: Platform) {
+  currentWorkout:CurrentWorkoutService;
+  constructor(private app: IonicApp, private platform: Platform,currentWorkout:CurrentWorkoutService) {
     this.initializeApp();
 
+    this.currentWorkout = currentWorkout;
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Getting Started', component: HomePage }
+      { title: 'Getting Started', component: HomePage },
+      { title: 'WorkoutPage', component: WorkoutPage }
     ];
 
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
+        
+      this.currentWorkout.init();
       // The platform is now ready. Note: if this callback fails to fire, follow
       // the Troubleshooting guide for a number of possible solutions:
       //
