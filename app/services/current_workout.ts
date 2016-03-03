@@ -9,9 +9,11 @@ import {CurrentPlanService} from "./current_plan"
 @Injectable()
 export class CurrentWorkoutService{
     currentPlan:CurrentPlanService;
+    name:String;
+    exercises:Array<IExercise>;
+    
     constructor(CurrentPlan:CurrentPlanService) {
         this.currentPlan = CurrentPlan;
-        console.log(this.currentPlan.getNextWorkout())
         
         
         
@@ -19,6 +21,14 @@ export class CurrentWorkoutService{
     
     // init workout service
     init(){
+        // 
+        var nextWorkout = this.currentPlan.getNextWorkout();
+        this.set(nextWorkout);
+    }
+    // set curretn workout equal to past in workout
+    set(workout:IWorkout){
+        this.name = workout.name;
+        this.exercises = workout.exercises;
     }
 
 }

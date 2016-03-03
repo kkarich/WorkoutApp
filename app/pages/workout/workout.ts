@@ -7,8 +7,8 @@ import{CurrentWorkoutService} from '../../services/current_workout';
   templateUrl: 'build/pages/workout/workout.html'
 })
 export class WorkoutPage {
-    currentWorkout:CurrentWorkoutService;
-    constructor(CurrentWorkout:CurrentWorkoutService) {
-        this.currentWorkout = CurrentWorkout;
+    workout:CurrentWorkoutService;
+    constructor(currentWorkout:CurrentWorkoutService) {
+        this.workout = currentWorkout;
     }
 }

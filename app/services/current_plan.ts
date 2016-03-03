@@ -77,10 +77,10 @@ export class CurrentPlanService {
         ];
     }
     // get next workout out if index is passed in, otherwas get first workout
-    getNextWorkout(index?: number) {
+    getNextWorkout(index?: number):IWorkout {
         // if this.workouts does not exist, return empty object
         if (this.workouts.length < 1) {
-            return {};
+            return;
         }
         
         // init next workout
