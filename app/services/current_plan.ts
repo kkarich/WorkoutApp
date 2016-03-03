@@ -92,7 +92,26 @@ export class CurrentPlanService {
         } else {
             nextWorkout = this.workouts[0];
         }
-        return nextWorkout;
+        
+        // pass the next workout to the build workout function and its value
+        return this.buildWorkout(nextWorkout);
+    }
+    // build workout takes a workout and builds it into an instance.
+    // That is that it will contain a reps array and either a suggest weight value or a defaulted weight value
+    buildWorkout(workout:IWorkout):IWorkout{
+        // map excercise 
+        workout.exercises.map((exercise)=>{
+            
+            // default reps array
+            exercise.reps = [0,0,0];
+            
+            // define weight
+            exercise.weight = 120;
+            return exercise;
+        });
+        
+        // return mapped workout
+        return workout;
     }
 
 }

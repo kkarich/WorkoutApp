@@ -27,6 +27,7 @@ export class CurrentWorkoutService{
     }
     // set curretn workout equal to past in workout
     set(workout:IWorkout){
+        console.log(workout)
         this.name = workout.name;
         this.exercises = workout.exercises;
     }
