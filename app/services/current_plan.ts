@@ -101,9 +101,8 @@ export class CurrentPlanService {
     buildWorkout(workout:IWorkout):IWorkout{
         // map excercise 
         workout.exercises.map((exercise)=>{
-            
             // default reps array
-            exercise.reps = [0,0,0];
+            exercise.reps = initArray(exercise.setGoal);
             
             // define weight
             exercise.weight = 120;
@@ -114,4 +113,13 @@ export class CurrentPlanService {
         return workout;
     }
 
+}
+
+// init array should init an array with length 'length' initialized with null values
+function  initArray(length){
+    var array = [];
+    for(var i = 0; i < length; i++){
+        array.push(null)
+    }
+    return array;
 }

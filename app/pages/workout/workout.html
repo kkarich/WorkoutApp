@@ -14,12 +14,8 @@
                 <span>{{exercise.setGoal}}x{{exercise.repGoal}} {{exercise.weight}}</span>
             </div>
             <div class="button-container">
-                <button>1</button>
-                <button>1</button>
-                <button>1</button>
-                
+                <button *ngFor="#rep of exercise.reps">{{rep}}</button>
             </div>
-            <!-- Add card content here! -->
         </ion-card-content>
 
     </ion-card>
