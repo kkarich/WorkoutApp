@@ -1,10 +1,9 @@
 export interface IExercise {
-    id:Number;
-    exercise_id:Number;
+    id?:Number;
+    exercise_id:String;
     name:string;
-    musclegroup:string;
-    repGoal:Number;
-    setGoal:Number;
+    rep_goal:Number;
+    set_goal:Number;
     weight?:Number;
     reps?:Array<Number>;
 }

@@ -9,3 +9,37 @@
 
 @import "../pages/home/home";
 @import "../pages/workout/workout";
+
+scroll-content{
+    background: #{map-get($colors, gray)}
+}
+
+.toolbar .toolbar-background{
+    background: #{map-get($colors, primary)}
+}
+
+
+.back-button{
+    color: #{map-get($colors, primary)}
+}
+
+.toolbar-title{
+    color: #{map-get($colors, gray)}
+}
+
+.button[rep-button]{
+    box-shadow: initial;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
+    min-width: 0;
+    vertical-align: middle;
+    background-clip: padding-box;
+    overflow: hidden;
+    font-size: 14px;
+    &.empty{
+        background: #{map-get($colors, dark_gray)}
+    }
+}
+
