@@ -1,6 +1,7 @@
 import {Page} from 'ionic-framework/ionic';
 
 import{CurrentWorkoutService} from '../../services/current_workout';
+import{LogService} from '../../services/log';
 
 
 @Page({
@@ -8,8 +9,14 @@ import{CurrentWorkoutService} from '../../services/current_workout';
 })
 export class WorkoutPage {
     workout:CurrentWorkoutService;
-    constructor(currentWorkout:CurrentWorkoutService) {
+    log:LogService
+    constructor(currentWorkout:CurrentWorkoutService,log:LogService) {
         this.workout = currentWorkout;
+        this.log = log;
+    }
+    save(){
+        // pass in this workout to log save method
+        this.log.save(this.workout);
     }
     handleRepClick(exerciseIndex,repIndex){
         var exercise = this.workout.exercises[exerciseIndex];

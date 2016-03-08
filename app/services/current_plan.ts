@@ -15,6 +15,7 @@ export class CurrentPlanService {
         this.description = "PHUL workout test";
         this.workouts = [
             {
+                "plan_id":1,
                 "name": "Upper Power",
                 "exercises": [
                     {
@@ -62,6 +63,7 @@ export class CurrentPlanService {
                 ]
             },
             {
+                "plan_id":1,
                 "name": "Lower Power",
                 "exercises": [
                     {
@@ -97,6 +99,7 @@ export class CurrentPlanService {
                 ]
             },
             {
+                "plan_id":1,
                 "name": "Upper Hypertrophy",
                 "exercises": [
                     {
@@ -144,6 +147,7 @@ export class CurrentPlanService {
                 ]
             },
             {
+                "plan_id":1,
                 "name": "Lower Hypertrophy",
                 "exercises": [
                     {

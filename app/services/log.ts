@@ -34,7 +34,7 @@ export class LogService {
             )
     }
     // creates a log for a workout
-    logWorkout(workoutId: Number, iworkoutLogId?: Number) {
+    logWorkout(workout:) {
         // if id exists insert else update
         // this.storage.query('insert into Workout_Logs(workoutId) values(' + workoutId + ')');
     }
