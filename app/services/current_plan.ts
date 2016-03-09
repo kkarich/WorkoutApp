@@ -203,10 +203,11 @@ getNextWorkout(index ?: number):IWorkout {
     // Otherwise, return first workout
     if (index && index + 1 != this.workouts.length) {
         nextWorkout = this.workouts[index + 1];
+        nextWorkout.index = index + 1;
     } else {
         nextWorkout = this.workouts[0];
+        nextWorkout.index = 0;
     }
-        
     // pass the next workout to the build workout function and its value
     return this.buildWorkout(nextWorkout);
 }
