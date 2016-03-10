@@ -40,8 +40,10 @@ export class LogService {
     }
     // creates a log for a workout
     logWorkout(workout:IWorkout) {
-        console.log('log',workout)
-        console.log('log',workout.exercises[0].reps.toString())
+        // ensure workout id is null if it does not exist. needed for sql storage
+        if(!workout.id){
+            workout.id = null;
+        }
         // if id exists insert else update
         this.storage.query('insert or replace into Workout_Logs(Id, WorkoutIndex,PlanId,Name) values(' + workout.id + ',' + workout.index + ',"' + workout.plan_id + '","' +  workout.name + '")')
             .then((resp) => {
@@ -60,8 +62,13 @@ export class LogService {
     }
     // logs a new exercise
     logExercise(workoutLogId: Number, exerciseIndex: Number,exercise:IExercise) {
-        this.storage.query('insert into Exercise_Logs(WorkoutLogId,ExerciseIndex,ExerciseId, SetGoal, RepGoal, Reps, Weight) values(' 
-        + workoutLogId + ',"' + exerciseIndex + '","' +  exercise.id + '","' +  exercise.set_goal + '","' +  exercise.rep_goal + '","' +  exercise.reps.toString() + '","' +  exercise.weight + '")')
+        // ensure workout id is null if it does not exist. needed for sql storage
+        if(!exercise.id){
+            exercise.id = null;
+        }
+        
+        this.storage.query('insert or replace into Exercise_Logs(Id, WorkoutLogId,ExerciseIndex,ExerciseId, SetGoal, RepGoal, Reps, Weight) values(' 
+        + exercise.id + ',' + workoutLogId + ',"' + exerciseIndex + '",' +  exercise.id + ',"' +  exercise.set_goal + '","' +  exercise.rep_goal + '","' +  exercise.reps.toString() + '","' +  exercise.weight + '")')
     }
     // gets a workout by id
     getWorkout(id: Number) {
@@ -107,6 +114,7 @@ function buildExercises(exercises_log):Array<IExercise>{
             continue
         console.log(e,i)
         // assign exercise properties from db
+        exercise.id = e.id;
         exercise.name = e.Name;
         exercise.exercise_id = e.ExerciseId;
         exercise.set_goal = e.SetGoal;

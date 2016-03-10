@@ -25,8 +25,9 @@ export class CurrentWorkoutService{
     // init workout service
     init(){
         // Check
-        // var nextWorkout = this.currentPlan.getNextWorkout();
-        this.log.getWorkout(2).then((nextWorkout)=>{
+        var nextWorkout = this.currentPlan.getNextWorkout();
+            this.set(nextWorkout);
+        this.log.getWorkout(1).then((nextWorkout)=>{
             console.log(nextWorkout)
             this.set(nextWorkout);
         })
