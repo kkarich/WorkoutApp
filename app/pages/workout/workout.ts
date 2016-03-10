@@ -8,7 +8,7 @@ import{LogService} from '../../services/log';
   templateUrl: 'build/pages/workout/workout.html'
 })
 export class WorkoutPage {
-    workout:CurrentWorkoutService;
+    workout;
     log:LogService
     constructor(currentWorkout:CurrentWorkoutService,log:LogService) {
         this.workout = currentWorkout;
@@ -16,7 +16,7 @@ export class WorkoutPage {
     }
     save(){
         // pass in this workout to log save method
-        this.log.logWorkout(this.workout);
+        this.log.logWorkout(this.workout, true);
     }
     handleRepClick(exerciseIndex,repIndex){
         var exercise = this.workout.exercises[exerciseIndex];

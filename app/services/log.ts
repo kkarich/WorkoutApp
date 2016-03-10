@@ -20,7 +20,7 @@ export class LogService {
                 DateStarted TEXT, 
                 DateCompleted TEXT
                 )`
-             )
+        )
              
         // create exercise table
         this.storage.query(`
@@ -36,51 +36,56 @@ export class LogService {
                 HitGoal INTEGER,
                 FOREIGN KEY(WorkoutLogId) REFERENCES Workout_Logs(id)
                 )`
-            )
+        )
     }
     // creates a log for a workout
-    logWorkout(workout:IWorkout) {
+    logWorkout(workout: IWorkout,completed:boolean) {
         // ensure workout id is null if it does not exist. needed for sql storage
-        if(!workout.id){
+        if (!workout.id) {
             workout.id = null;
         }
+        var dateCompleted= null;
+        // if the workout has been completed, be sure to log it
+        if(completed) dateCompleted = new Date().toLocaleDateString();
+        
+        console.log('dateCompleted',dateCompleted)
         // if id exists insert else update
-        this.storage.query('insert or replace into Workout_Logs(Id, WorkoutIndex,PlanId,Name) values(' + workout.id + ',' + workout.index + ',"' + workout.plan_id + '","' +  workout.name + '")')
+        this.storage.query('insert or replace into Workout_Logs(Id, WorkoutIndex,PlanId,Name,DateCompleted) values(' 
+        + workout.id + ',' + workout.index + ',"' + workout.plan_id + '","' + workout.name + '","' + dateCompleted + '")')
             .then((resp) => {
                 // ensure the response object exists
-                if(resp && resp.res){
+                if (resp && resp.res) {
                     // init the workout log id, of the data that was just inserted
                     var workoutLogId = resp.res.insertId;
-                    for(var i in workout.exercises){
+                    for (var i in workout.exercises) {
                         var exercise = workout.exercises[i];
-                        this.logExercise(workoutLogId, i , exercise)
+                        this.logExercise(workoutLogId, i, exercise)
                     }
-                    
+
                 }
             })
-        
+
     }
     // logs a new exercise
-    logExercise(workoutLogId: Number, exerciseIndex: Number,exercise:IExercise) {
+    logExercise(workoutLogId: Number, exerciseIndex: Number, exercise: IExercise) {
         // ensure workout id is null if it does not exist. needed for sql storage
-        if(!exercise.id){
+        if (!exercise.id) {
             exercise.id = null;
         }
-        
-        this.storage.query('insert or replace into Exercise_Logs(Id, WorkoutLogId,ExerciseIndex,ExerciseId, SetGoal, RepGoal, Reps, Weight) values(' 
-        + exercise.id + ',' + workoutLogId + ',"' + exerciseIndex + '",' +  exercise.id + ',"' +  exercise.set_goal + '","' +  exercise.rep_goal + '","' +  exercise.reps.toString() + '","' +  exercise.weight + '")')
+
+        this.storage.query('insert or replace into Exercise_Logs(Id, WorkoutLogId,ExerciseIndex,ExerciseId, SetGoal, RepGoal, Reps, Weight) values('
+            + exercise.id + ',' + workoutLogId + ',"' + exerciseIndex + '",' + exercise.id + ',"' + exercise.set_goal + '","' + exercise.rep_goal + '","' + exercise.reps.toString() + '","' + exercise.weight + '")')
     }
     // gets a workout by id
     getWorkout(id: Number) {
-         return new Promise((resolve,reject) =>{
-             
-         var workout:IWorkout = {};
-         this.storage.query('select * from workout_Logs as wl join exercise_Logs as el on wl.id = el.workoutlogid where wl.id = ' + id)
-            .then((resp) => {
+        // because we are doing a db query we will need to return a promise. That can then be used to get info
+        return new Promise((resolve, reject) => {
+            var workout: IWorkout = {};
+            this.storage.query('select * from workout_Logs as wl join exercise_Logs as el on wl.id = el.workoutlogid where wl.id = ' + id)
+                .then((resp) => {
                     // ensure the response object exists
-                    if(resp && resp.res && resp.res.rows){
-                        console.log('test',resp)
-                        // build workout
+                    if (resp && resp.res && resp.res.rows) {
+                        // build workout, may eventually pull this out
                         workout.id = resp.res.rows[0].WorkoutLogId;
                         workout.name = resp.res.rows[0].Name;
                         workout.plan_id = resp.res.rows[0].PlanId;
@@ -88,31 +93,30 @@ export class LogService {
                         
                         // build workout exercises
                         workout.exercises = buildExercises(resp.res.rows)
-                        console.log("workout",workout)
                         resolve(workout);
                     }
                 })
-             
-         });
+
+        });
     }
     // check to see if there is a vialble current workout or returns info for next workout
     getCurrentWorkout() {
 
     }
-                
+
 }
 
-function buildExercises(exercises_log):Array<IExercise>{
-    var exercises:Array<IExercise> = [];
-    for(var i in exercises_log){
+function buildExercises(exercises_log): Array<IExercise> {
+    var exercises: Array<IExercise> = [];
+    for (var i in exercises_log) {
         console.log()
         // init variables
-        var exercise:IExercise = {};
+        var exercise: IExercise = {};
         var e = exercises_log[i];
-        
-        if(typeof e !== "object")
+
+        if (typeof e !== "object")
             continue
-        console.log(e,i)
+        console.log(e, i)
         // assign exercise properties from db
         exercise.id = e.id;
         exercise.name = e.Name;
@@ -124,7 +128,7 @@ function buildExercises(exercises_log):Array<IExercise>{
         
         // push single exercise into exercises array we will return 
         exercises.push(exercise);
-        
+
     }
     return exercises;
 }
