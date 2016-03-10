@@ -64,22 +64,29 @@ export class LogService {
         + workoutLogId + ',"' + exerciseIndex + '","' +  exercise.id + '","' +  exercise.set_goal + '","' +  exercise.rep_goal + '","' +  exercise.reps.toString() + '","' +  exercise.weight + '")')
     }
     // gets a workout by id
-    getWorkout(id: Number):IWorkout {
-        let workout:IWorkout;
+    getWorkout(id: Number) {
+         return new Promise((resolve,reject) =>{
+             
+         var workout:IWorkout = {};
          this.storage.query('select * from workout_Logs as wl join exercise_Logs as el on wl.id = el.workoutlogid where wl.id = ' + id)
             .then((resp) => {
                     // ensure the response object exists
                     if(resp && resp.res && resp.res.rows){
-                        console.log('test')
+                        console.log('test',resp)
                         // build workout
+                        workout.id = resp.res.rows[0].WorkoutLogId;
+                        workout.name = resp.res.rows[0].Name;
+                        workout.plan_id = resp.res.rows[0].PlanId;
+                        workout.index = resp.res.rows[0].WorkoutIndex;
                         
                         // build workout exercises
                         workout.exercises = buildExercises(resp.res.rows)
-                        
+                        console.log("workout",workout)
+                        resolve(workout);
                     }
                 })
-            return workout
-        
+             
+         });
     }
     // check to see if there is a vialble current workout or returns info for next workout
     getCurrentWorkout() {
@@ -89,12 +96,16 @@ export class LogService {
 }
 
 function buildExercises(exercises_log):Array<IExercise>{
-    var exercises:Array<IExercise>;
+    var exercises:Array<IExercise> = [];
     for(var i in exercises_log){
+        console.log()
         // init variables
-        var exercise:IExercise;
+        var exercise:IExercise = {};
         var e = exercises_log[i];
-        console.log(e.Reps.split(','))
+        
+        if(typeof e !== "object")
+            continue
+        console.log(e,i)
         // assign exercise properties from db
         exercise.name = e.Name;
         exercise.exercise_id = e.ExerciseId;

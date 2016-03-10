@@ -24,11 +24,12 @@ export class CurrentWorkoutService{
     
     // init workout service
     init(){
-        // 
+        // Check
         // var nextWorkout = this.currentPlan.getNextWorkout();
-        var nextWorkout = this.log.getWorkout(1);
-        
-        this.set(nextWorkout);
+        this.log.getWorkout(2).then((nextWorkout)=>{
+            console.log(nextWorkout)
+            this.set(nextWorkout);
+        })
     }
     // set curretn workout equal to past in workout
     set(workout:IWorkout){
