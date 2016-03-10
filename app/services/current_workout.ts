@@ -10,7 +10,7 @@ import {CurrentPlanService} from "./current_plan"
 export class CurrentWorkoutService{
     currentPlan:CurrentPlanService;
     log:LogService;
-    
+    id:Number;
     index:Number;
     plan_id:String;
     name:String;
@@ -33,10 +33,11 @@ export class CurrentWorkoutService{
     }
     // set curretn workout equal to past in workout
     set(workout:IWorkout){
-        console.log(workout)
+        console.log("workout",workout)
+        this.id = workout.id;
         this.name = workout.name;
         this.index = workout.index;
-        this.plan_id = "123123123123123"
+        this.plan_id = "123"
         this.exercises = workout.exercises;
     }
 

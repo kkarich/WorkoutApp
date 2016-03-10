@@ -43,7 +43,7 @@ export class LogService {
         console.log('log',workout)
         console.log('log',workout.exercises[0].reps.toString())
         // if id exists insert else update
-        this.storage.query('insert into Workout_Logs(WorkoutIndex,PlanId,Name) values(' + workout.index + ',"' + workout.plan_id + '","' +  workout.name + '")')
+        this.storage.query('insert or replace into Workout_Logs(Id, WorkoutIndex,PlanId,Name) values(' + workout.id + ',' + workout.index + ',"' + workout.plan_id + '","' +  workout.name + '")')
             .then((resp) => {
                 // ensure the response object exists
                 if(resp && resp.res){
