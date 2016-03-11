@@ -39,19 +39,19 @@ export class LogService {
         )
     }
     // creates a log for a workout
-    logWorkout(workout: IWorkout,completed:boolean) {
+    logWorkout(workout: IWorkout, completed: boolean) {
         // ensure workout id is null if it does not exist. needed for sql storage
         if (!workout.id) {
             workout.id = null;
         }
-        var dateCompleted= null;
+        var dateCompleted = null;
         // if the workout has been completed, be sure to log it
-        if(completed) dateCompleted = new Date().toLocaleDateString();
-        
-        console.log('dateCompleted',dateCompleted)
+        if (completed) dateCompleted = new Date().toLocaleDateString();
+
+        console.log('dateCompleted', dateCompleted)
         // if id exists insert else update
-        this.storage.query('insert or replace into Workout_Logs(Id, WorkoutIndex,PlanId,Name,DateCompleted) values(' 
-        + workout.id + ',' + workout.index + ',"' + workout.plan_id + '","' + workout.name + '","' + dateCompleted + '")')
+        this.storage.query('insert or replace into Workout_Logs(Id, WorkoutIndex,PlanId,Name,DateCompleted) values('
+            + workout.id + ',' + workout.index + ',"' + workout.plan_id + '","' + workout.name + '","' + dateCompleted + '")')
             .then((resp) => {
                 // ensure the response object exists
                 if (resp && resp.res) {
@@ -100,10 +100,25 @@ export class LogService {
         });
     }
     // check to see if there is a vialble current workout or returns info for next workout
+    // 3 possible out comes: returns the current workout, returns the previous workout index, or returns nothing: indicating we need to build the first workout
     getCurrentWorkout() {
+        return new Promise((resolve, reject) => {
+            this.storage.query('select * from workout_Logs limit 1')
+                .then((resp) => {
+                    // if the response has a row, return that rows id.
+                    if (resp && resp.res && resp.res.rows && resp.res.rows.length === 1) {
+                        var workout = resp.res.rows[0]
+                        console.log(workout.id)
+                        this.getWorkout(workout.id).then((currentWorkout)=>{
+                            resolve(currentWorkout)
+                        })
+                    } else {
+                        // did not find a workout. This indicates we need to build our first one
+                    }
+                });
+        });
 
-    }
-
+    };
 }
 
 function buildExercises(exercises_log): Array<IExercise> {

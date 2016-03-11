@@ -25,11 +25,14 @@ export class CurrentWorkoutService{
     // init workout service
     init(){
         // Check
-        var nextWorkout = this.currentPlan.getNextWorkout();
-            this.set(nextWorkout);
-        this.log.getWorkout(1).then((nextWorkout)=>{
-            console.log(nextWorkout)
-            this.set(nextWorkout);
+        this.log.getCurrentWorkout().then((resolveObject)=>{
+            console.log(resolveObject)
+            // check if resolve object has an id. If it does than it is a workout.
+            if(resolveObject.id){
+                this.set(resolveObject);
+            }else{
+                this.set(this.currentPlan.getNextWorkout());
+            }
         })
     }
     // set curretn workout equal to past in workout
