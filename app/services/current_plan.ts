@@ -15,7 +15,7 @@ export class CurrentPlanService {
         this.description = "PHUL workout test";
         this.workouts = [
             {
-                "plan_id":1,
+                "plan_id": 1,
                 "name": "Upper Power",
                 "exercises": [
                     {
@@ -63,7 +63,7 @@ export class CurrentPlanService {
                 ]
             },
             {
-                "plan_id":1,
+                "plan_id": 1,
                 "name": "Lower Power",
                 "exercises": [
                     {
@@ -99,7 +99,7 @@ export class CurrentPlanService {
                 ]
             },
             {
-                "plan_id":1,
+                "plan_id": 1,
                 "name": "Upper Hypertrophy",
                 "exercises": [
                     {
@@ -147,7 +147,7 @@ export class CurrentPlanService {
                 ]
             },
             {
-                "plan_id":1,
+                "plan_id": 1,
                 "name": "Lower Hypertrophy",
                 "exercises": [
                     {
@@ -190,43 +190,43 @@ export class CurrentPlanService {
             }
         ]
     }
-// get next workout out if index is passed in, otherwas get first workout
-getNextWorkout(index ?: number):IWorkout {
-    // if this.workouts does not exist, return empty object
-    if (this.workouts.length < 1) {
-        return;
+    // get next workout out if index is passed in, otherwas get first workout
+    getNextWorkout(index?: number): IWorkout {
+        // if this.workouts does not exist, return empty object
+        if (this.workouts.length < 1) {
+            return;
+        }
+        console.log(index)
+        // init next workout
+        var nextWorkout: IWorkout;
+        // if index exists and it is not the last element in array, return next workout.
+        // Otherwise, return first workout
+        if (index !== null && index + 1 != this.workouts.length) {
+            nextWorkout = this.workouts[index + 1];
+            nextWorkout.index = index + 1;
+        } else {
+            nextWorkout = this.workouts[0];
+            nextWorkout.index = 0;
+        }
+        // pass the next workout to the build workout function and its value
+        return this.buildWorkout(nextWorkout);
     }
-        
-    // init next workout
-    var nextWorkout: IWorkout;
-    // if index exists and it is not the last element in array, return next workout.
-    // Otherwise, return first workout
-    if (index && index + 1 != this.workouts.length) {
-        nextWorkout = this.workouts[index + 1];
-        nextWorkout.index = index + 1;
-    } else {
-        nextWorkout = this.workouts[0];
-        nextWorkout.index = 0;
-    }
-    // pass the next workout to the build workout function and its value
-    return this.buildWorkout(nextWorkout);
-}
-// build workout takes a workout and builds it into an instance.
-// That is that it will contain a reps array and either a suggest weight value or a defaulted weight value
-buildWorkout(workout:IWorkout):IWorkout{
-    // map excercise 
-    workout.exercises.map((exercise) => {
-        // default reps array
-        exercise.reps = initArray(exercise.set_goal);
+    // build workout takes a workout and builds it into an instance.
+    // That is that it will contain a reps array and either a suggest weight value or a defaulted weight value
+    buildWorkout(workout: IWorkout): IWorkout {
+        // map excercise 
+        workout.exercises.map((exercise) => {
+            // default reps array
+            exercise.reps = initArray(exercise.set_goal);
             
-        // define weight
-        exercise.weight = 120;
-        return exercise;
-    });
+            // define weight
+            exercise.weight = 120;
+            return exercise;
+        });
         
-    // return mapped workout
-    return workout;
-}
+        // return mapped workout
+        return workout;
+    }
 
 }
 
