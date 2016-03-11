@@ -15,8 +15,9 @@ export class WorkoutPage {
         this.log = log;
     }
     save(){
+        this.workout.completed = true;
         // pass in this workout to log save method
-        this.log.logWorkout(this.workout, true);
+        this.log.logWorkout(this.workout);
     }
     handleRepClick(exerciseIndex,repIndex){
         var exercise = this.workout.exercises[exerciseIndex];
