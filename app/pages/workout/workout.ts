@@ -12,9 +12,9 @@ export class WorkoutPage {
     // init properties
     workout;
     log: LogService
-    nav:NavController
+    nav: NavController
 
-    constructor(nav:NavController, currentWorkout: CurrentWorkoutService, log: LogService) {
+    constructor(nav: NavController, currentWorkout: CurrentWorkoutService, log: LogService) {
         this.workout = currentWorkout;
         this.log = log;
         this.nav = nav;
@@ -46,7 +46,7 @@ export class WorkoutPage {
             message: "",
             inputs: [
                 {
-                    type:'number',
+                    type: 'number',
                     name: 'weight',
                     value: exercise.weight,
                 },
@@ -61,7 +61,7 @@ export class WorkoutPage {
                 {
                     text: 'Update',
                     handler: data => {
-                        console.log('Saved clicked',data);
+                        console.log('Saved clicked', data);
                         exercise.weight = data.weight;
                     }
                 }

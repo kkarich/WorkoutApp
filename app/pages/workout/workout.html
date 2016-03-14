@@ -14,13 +14,15 @@
                 <span (click)="adjustWeightPrompt(exercise)">{{exercise.set_goal}}x{{exercise.rep_goal}} {{exercise.weight}} lb's</span>
             </div>
             <div class="button-container">
-                <button rep-button class="rep-button" 
-                [ngClass]="{empty: !rep}" 
-                (click)="handleRepClick(exerciseIndex,repIndex)" 
-                *ngFor="#rep of exercise.reps; #repIndex = index">{{rep}}</button>
+                <button 
+                    rep-button class="rep-button" 
+                    [ngClass]="{empty: !rep}" 
+                    (click)="handleRepClick(exerciseIndex,repIndex)" 
+                    *ngFor="#rep of exercise.reps; #repIndex = index">{{rep}}
+                </button>
             </div>
         </ion-card-content>
 
     </ion-card>
-    <button outline (click)="save()">Finish</button>
+    <button fab fab-right (click)="save()">Finish</button>
 </ion-content>

@@ -220,7 +220,7 @@ export class CurrentPlanService {
             exercise.reps = initArray(exercise.set_goal);
             
             // define weight
-            exercise.weight = 120;
+            exercise.weight = 0;
             return exercise;
         });
         

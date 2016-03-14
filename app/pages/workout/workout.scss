@@ -1,7 +1,14 @@
 .button-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     padding-top: 5px;
+    button[rep-button]{
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    button[rep-button]:first-child{
+        margin-left:0;
+    }
 }
 
 .information-container{

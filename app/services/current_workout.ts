@@ -27,7 +27,7 @@ export class CurrentWorkoutService {
     // init workout service
     init() {
         // look for current workout
-        this.log.getCurrentWorkout().then((response) => {
+        this.log.getCurrentWorkout().then((response:{workout?:IWorkout,index?:number}) => {
             // if the workout exists in the response use that to set it
             // otherwise, use the index found to build the next workout
             if (response.workout) {
