@@ -1,20 +1,30 @@
-
 <ion-navbar *navbar>
-  <button primary menuToggle>
-    <ion-icon name="menu"></ion-icon>
-  </button>
-  <ion-title>Home</ion-title>
+    <button primary menuToggle>
+        <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Home</ion-title>
 </ion-navbar>
 
 
 <ion-content padding class="home">
 
-    <ion-card >
+    <!--<ion-card>
         <ion-card-header>
             {{currentWorkout.name}}
         </ion-card-header>
         <ion-card-content>
             <button block (click)="openWorkout()">Start</button>
         </ion-card-content>
+    </ion-card>-->
+
+
+    <ion-card>
+        <ion-card-header>
+            {{currentPlan.name}}
+        </ion-card-header>
+        <ion-item>
+            <h2>{{currentWorkout.name}}</h2>
+            <button item-right outline (click)="openWorkout()">Start</button>
+        </ion-item>
     </ion-card>
 </ion-content>
