@@ -30,11 +30,11 @@ export class CurrentWorkoutService {
         this.log.getCurrentWorkout().then((response:{workout?:IWorkout,index?:number}) => {
             // if the workout exists in the response use that to set it
             // otherwise, use the index found to build the next workout
+            
             if (response.workout) {
                 this.set(response.workout);
             } else {
-                this.set(this.currentPlan.getNextWorkout(response.index));
-
+                this.set(this.currentPlan.getWorkout(response.index + 1));
             }
         })
 

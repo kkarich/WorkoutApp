@@ -191,25 +191,25 @@ export class CurrentPlanService {
         ]
     }
     // get next workout out if index is passed in, otherwas get first workout
-    getNextWorkout(index?: number): IWorkout {
+    getWorkout(index?: number): IWorkout {
         // if this.workouts does not exist, return empty object
         if (this.workouts.length < 1) {
             return;
         }
-        console.log(index)
+        console.log("index",index)
         // init next workout
-        var nextWorkout: IWorkout;
+        var workout: IWorkout;
         // if index exists and it is not the last element in array, return next workout.
         // Otherwise, return first workout
-        if (index !== null && index + 1 != this.workouts.length) {
-            nextWorkout = this.workouts[index + 1];
-            nextWorkout.index = index + 1;
+        if (index !== null && index < this.workouts.length) {
+            workout = this.workouts[index];
+            workout.index = index;
         } else {
-            nextWorkout = this.workouts[0];
-            nextWorkout.index = 0;
+            workout = this.workouts[0];
+            workout.index = 0;
         }
         // pass the next workout to the build workout function and its value
-        return this.buildWorkout(nextWorkout);
+        return this.buildWorkout(workout);
     }
     // build workout takes a workout and builds it into an instance.
     // That is that it will contain a reps array and either a suggest weight value or a defaulted weight value

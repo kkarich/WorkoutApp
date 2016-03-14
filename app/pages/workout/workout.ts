@@ -1,6 +1,7 @@
 import {Page, Alert, NavController} from 'ionic-framework/ionic';
 
 import {CurrentWorkoutService} from '../../services/current_workout';
+import {CurrentPlanService} from '../../services/current_plan';
 import {LogService} from '../../services/log';
 
 
@@ -11,11 +12,13 @@ export class WorkoutPage {
     
     // init properties
     workout;
+    plan: CurrentPlanService;
     log: LogService
     nav: NavController
 
-    constructor(nav: NavController, currentWorkout: CurrentWorkoutService, log: LogService) {
+    constructor(nav: NavController, currentPlan: CurrentPlanService, currentWorkout: CurrentWorkoutService, log: LogService) {
         this.workout = currentWorkout;
+        this.plan = currentPlan;
         this.log = log;
         this.nav = nav;
     }
@@ -25,7 +28,7 @@ export class WorkoutPage {
         this.workout.completed = true;
         
         // pass in this workout to log save method
-        this.log.logWorkout(this.workout).then((resp) =>{
+        this.log.logWorkout(this.workout).then((resp) => {
             console.log(resp)
             this.workout.init();
             this.nav.pop();
@@ -73,5 +76,13 @@ export class WorkoutPage {
             ]
         });
         this.nav.present(prompt);
+    }
+    // get value from passed in select object
+    onWorkoutChange({value}) {
+        if(value && value != this.workout.index){
+            // get workout by index and set it to current workout.
+            // we need to parse int to ensure we are not initing it with a string
+            this.workout.set(this.plan.getWorkout(parseInt(value)));
+        }
     }
 }
