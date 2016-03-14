@@ -13,13 +13,20 @@ export class LogService {
     }
     // use pouchdb to log workout
     logWorkout({_id, _rev, name, index, exercises, completed}) {
-        // ensure the id and rev work to update otherwise, create a new one with post
-        if (_id, _rev) {
-            this.db.put({ _id, _rev, name, index, exercises, completed });
-        } else {
-            _id = new Date().toJSON() + Math.random();
-            this.db.put({ _id, name, index, exercises, completed });
-        }
+
+        return new Promise((resolve, reject) => {
+            // ensure the id and rev work to update otherwise, create a new one with post
+            if (_id, _rev) {
+                this.db.put({ _id, _rev, name, index, exercises, completed }).then((resp) => {
+                    resolve(resp)
+                });
+            } else {
+                _id = new Date().toJSON() + Math.random();
+                this.db.put({ _id, name, index, exercises, completed }).then((resp) => {
+                    resolve(resp)
+                });
+            }
+        });
     }
     // get workout by _id
     getWorkout(_id: String) {
@@ -33,7 +40,7 @@ export class LogService {
     // 3 possible out comes: returns the current workout, returns the previous workout index, or returns nothing: indicating we need to build the first workout
     getCurrentWorkout() {
         return new Promise((resolve, reject) => {
-            this.db.allDocs({ limit:1, descending: true, include_docs: true }).then((result) => {
+            this.db.allDocs({ limit: 1, descending: true, include_docs: true }).then((result) => {
                 console.log("alldocs", result)
                 // init the response object
                 let response = { workout: null, index: null };

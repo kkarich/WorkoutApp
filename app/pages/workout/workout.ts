@@ -23,8 +23,13 @@ export class WorkoutPage {
     // save the workout
     save() {
         this.workout.completed = true;
+        
         // pass in this workout to log save method
-        this.log.logWorkout(this.workout);
+        this.log.logWorkout(this.workout).then((resp) =>{
+            console.log(resp)
+            this.workout.init();
+            this.nav.pop();
+        });
     }
     
     // login for when someone clicks on a rep
