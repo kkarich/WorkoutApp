@@ -1,11 +1,9 @@
 <ion-navbar *navbar>
-    <button primary menuToggle>
-        <ion-icon name="menu"></ion-icon>
+    <button menuToggle>
+        <ion-icon white name="menu"></ion-icon>
     </button>
-    <ion-title >{{workout.name}} {{workout.index}}</ion-title>
-    <ion-select #select (change)="onWorkoutChange(select)">
-        <ion-option *ngFor="#w of plan.workouts; #index = index" [value]="index" [checked]="w.index == workout.index"> {{w.name}}</ion-option>
-    </ion-select>
+    <ion-title (click)="changeWorkoutPrompt()">{{workout.name}}   <ion-icon name="arrow-dropdown"></ion-icon></ion-title>
+
 </ion-navbar>
 
 

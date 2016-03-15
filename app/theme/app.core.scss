@@ -10,11 +10,16 @@
 @import "../pages/home/home";
 @import "../pages/workout/workout";
 
+
 scroll-content{
     background: #{map-get($colors, gray)}
 }
 
-.toolbar .toolbar-background{
+.toolbar 
+    button{
+        color:white;
+    }
+    .toolbar-background{
     background: #{map-get($colors, primary)}
 }
 

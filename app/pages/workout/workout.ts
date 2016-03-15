@@ -77,9 +77,46 @@ export class WorkoutPage {
         });
         this.nav.present(prompt);
     }
+    changeWorkoutPrompt() {
+        // Init prompt values
+        let prompt = Alert.create({
+            title: 'Change Workout',
+            message: "",
+            buttons: [
+                {
+                    text: 'Cancel',
+                    handler: data => {
+                        console.log('Cancel clicked');
+                    }
+                },
+                {
+                    text: 'Update',
+                    handler: data => {
+                        this.changeWorkout(data)
+                    }
+                }
+            ]
+        });
+        // add in the plans workout options
+        // key the value as the index, used to get the workout
+        for (var i in this.plan.workouts) {
+            var workout = this.plan.workouts[i];
+            prompt.addInput({
+                type: 'radio',
+                label: workout.name,
+                value: i,
+                checked: this.workout.index == workout.index
+            });
+
+        }
+        
+        // present alert to screen
+        this.nav.present(prompt);
+    }
+    
     // get value from passed in select object
-    onWorkoutChange({value}) {
-        if(value && value != this.workout.index){
+    changeWorkout(value) {
+        if (value && value != this.workout.index) {
             // get workout by index and set it to current workout.
             // we need to parse int to ensure we are not initing it with a string
             this.workout.set(this.plan.getWorkout(parseInt(value)));
