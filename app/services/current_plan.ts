@@ -1,6 +1,6 @@
 import {Injectable} from "angular2/core";
 
-import {IWorkout} from "../interfaces/workout"
+import {IWorkout, Workout} from "../interfaces/workout"
 @Injectable()
 export class CurrentPlanService {
     _id: String;
@@ -196,7 +196,6 @@ export class CurrentPlanService {
         if (this.workouts.length < 1) {
             return;
         }
-        console.log("index",index)
         // init next workout
         var workout: IWorkout;
         // if index exists and it is not the last element in array, return next workout.
@@ -209,32 +208,6 @@ export class CurrentPlanService {
             workout.index = 0;
         }
         // pass the next workout to the build workout function and its value
-        return this.buildWorkout(workout);
-    }
-    // build workout takes a workout and builds it into an instance.
-    // That is that it will contain a reps array and either a suggest weight value or a defaulted weight value
-    buildWorkout(workout: IWorkout): IWorkout {
-        // map excercise 
-        workout.exercises.map((exercise) => {
-            // default reps array
-            exercise.reps = initArray(exercise.set_goal);
-            
-            // define weight
-            exercise.weight = 0;
-            return exercise;
-        });
-        
-        // return mapped workout
-        return workout;
+        return new Workout(workout);
     }
 
-}
-
-// init array should init an array with length 'length' initialized with null values
-function initArray(length) {
-    var array = [];
-    for (var i = 0; i < length; i++) {
-        array.push(null)
-    }
-    return array;
-}

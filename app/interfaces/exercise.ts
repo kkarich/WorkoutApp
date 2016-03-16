@@ -14,6 +14,6 @@ export interface IExerciseInstance {
     name:string;
     rep_goal:Number;
     set_goal:Number;
-    weight?:Number;
-    reps?:Array<Number>;
+    weight:Number;
+    reps:Array<Number>;
 }
