@@ -1,4 +1,4 @@
-import {IExercise, IExerciseInstance} from "./exercise"
+import {IExercise, Exercise} from "./exercise"
 
 export interface IWorkout {
     _id?: string;
@@ -11,7 +11,7 @@ export interface IWorkout {
 
 }
 
-// 
+// Workout class contains 
 export class Workout implements IWorkout {
     _id;
     _rev;
@@ -24,29 +24,14 @@ export class Workout implements IWorkout {
     constructor({name, exercises,index, plan_id}: IWorkout) {
         // init variables
         this.name = name;
-        this.exercises = exercises;
         this.index = index;
         this.plan_id = plan_id;
         
         // map excercise 
-        this.exercises.map((exercise) => {
-            // default reps array
-            exercise.reps = initArray(exercise.set_goal);
-
-            // TODO: Get suggested weight from previous workout
-            // define weight
-            exercise.weight = null;
-            return exercise;
+        this.exercises = exercises.map((exercise) => {
+            // generate exercise object from exercise constructor object
+            return new Exercise(exercise); 
         });
     }
 
-}
-
-// init array should init an array with length 'length' initialized with null values
-function initArray(length) {
-    var array = [];
-    for (var i = 0; i < length; i++) {
-        array.push(null)
-    }
-    return array;
 }
