@@ -17,7 +17,7 @@
             <div class="button-container">
                 <button 
                     rep-button class="rep-button" 
-                    [ngClass]="{empty: !rep}" 
+                    [ngClass]="{empty: rep !== 0 && !rep}" 
                     (click)="handleRepClick(exerciseIndex,repIndex)" 
                     *ngFor="#rep of exercise.reps; #repIndex = index">{{rep}}
                 </button>
