@@ -29,7 +29,6 @@ export class WorkoutPage {
         
         // pass in this workout to log save method
         this.log.logWorkout(this.workout).then((resp) => {
-            console.log(resp)
             this.workout.init();
             this.nav.pop();
         });
@@ -48,7 +47,6 @@ export class WorkoutPage {
     }
 
     adjustWeightPrompt(exercise) {
-        console.log(exercise)
         let prompt = Alert.create({
             title: 'Adjust Weight',
             message: "",

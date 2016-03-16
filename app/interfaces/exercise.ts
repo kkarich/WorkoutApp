@@ -29,8 +29,6 @@ export class Exercise implements IExercise {
         // TODO: Get suggested weight from previous workout
         // define weight
         this.weight = null;
-        
-        console.log("REPS", this.reps)
     }
 
 }
