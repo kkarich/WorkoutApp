@@ -14,13 +14,17 @@
                 <span>{{exercise.name}}</span>
                 <span (click)="adjustWeightPrompt(exercise)">{{exercise.set_goal}}x{{exercise.rep_goal}} {{exercise.weight || 0}} lb's</span>
             </div>
-            <div class="button-container">
+            <div *ngIf="!exercise.message" class="button-container">
                 <button 
                     rep-button class="rep-button" 
                     [ngClass]="{empty: rep !== 0 && !rep}" 
                     (click)="handleRepClick(exerciseIndex,repIndex)" 
                     *ngFor="#rep of exercise.reps; #repIndex = index">{{rep}}
                 </button>
+            </div>
+            
+            <div *ngIf="exercise.message">
+                {{exercise.message}}
             </div>
         </ion-card-content>
 

@@ -72,7 +72,7 @@ export class WorkoutPage {
     // handles completed exercise. ie: markes as complete, calculates suggested weight, ...
     handleCompletedExercise(exercise) {
         console.log("COMPLETED")
-        exercise.completed = true;
+        exercise.message = "This is a test";
         exercise.suggestedWeight = exercise.weight + 5;
     }
     // prompt to adjust weight for clicked exercise
