@@ -1,13 +1,13 @@
 import {Injectable} from "angular2/core";
 
-import {IWorkout} from "../interfaces/workout"
+import {IWorkout, Workout} from "../interfaces/workout"
 import {IExercise} from "../interfaces/exercise"
 // import Local services
 import {LogService} from "./log"
 import {CurrentPlanService} from "./current_plan"
 
 @Injectable()
-export class CurrentWorkoutService {
+export class CurrentWorkoutService{
     currentPlan: CurrentPlanService;
     log: LogService;
     _id: String;
@@ -32,15 +32,15 @@ export class CurrentWorkoutService {
             // otherwise, use the index found to build the next workout
             
             if (response.workout) {
-                this.set(response.workout);
+                this.set(new Workout(response.workout));
             } else {
-                this.set(this.currentPlan.getWorkout(response.index + 1));
+                this.set(new Workout(this.currentPlan.getWorkout(response.index + 1)));
             }
         })
 
     }
     // set curretn workout equal to past in workout
-    set(workout: IWorkout) {
+    set(workout: Workout) {
         this._id = workout._id;
         this._rev = workout._rev;
         this.name = workout.name;

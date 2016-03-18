@@ -1,5 +1,7 @@
 import {Page, Alert, NavController} from 'ionic-framework/ionic';
 
+import {IWorkout, Workout} from "../../interfaces/workout"
+
 import {CurrentWorkoutService} from '../../services/current_workout';
 import {CurrentPlanService} from '../../services/current_plan';
 import {LogService} from '../../services/log';
@@ -24,19 +26,8 @@ export class WorkoutPage {
         this.nav = nav;
 
         this.exerciseIsCompleted = debounce((exercise) => {
-            // default to true, for easier 
-            var isCompleted = true;
-
-            // check each rep to make sure it is not null 
-            for (var i in exercise.reps) {
-                var rep = exercise.reps[i];
-                // if rep is null return false
-                if (!rep && rep !== 0) {
-                    return;
-                }
-            }
             // if the exercise is completed, make sure to handle it
-            this.handleCompletedExercise(exercise);
+            if (exercise.isCompleted()) this.handleCompletedExercise(exercise);
         }, 1000, false);
 
     }
@@ -72,9 +63,15 @@ export class WorkoutPage {
     // handles completed exercise. ie: markes as complete, calculates suggested weight, ...
     handleCompletedExercise(exercise) {
         console.log("COMPLETED")
-        exercise.message = "This is a test";
-        exercise.suggestedWeight = exercise.weight + 5;
+        if (exercise.reachedGoal()) {
+            exercise.message = "Nice job";
+
+        } else {
+            exercise.message = "Better luck next time";
+
+        }
     }
+
     // prompt to adjust weight for clicked exercise
     adjustWeightPrompt(exercise) {
         let prompt = Alert.create({

@@ -16,20 +16,49 @@ export class Exercise implements IExercise {
     set_goal;
     weight;
     reps;
-    constructor({exercise_id, name, rep_goal, set_goal}: IExercise) {
+    constructor({exercise_id, name, rep_goal, set_goal, reps, weight}: IExercise) {
         // init properties
         this.name = name;
         this.exercise_id = exercise_id;
         this.rep_goal = rep_goal;
         this.set_goal = set_goal;
-        
+
         // default reps array
-        this.reps = initArray(set_goal);
+        this.reps = reps || initArray(set_goal);
 
         // TODO: Get suggested weight from previous workout
         // define weight
-        this.weight = null;
+        this.weight = weight || null;
     }
+
+    // check to see if all of the reps have been completed
+    isCompleted() {
+        // check each rep to make sure it is not null 
+        for (var i in this.reps) {
+            var rep = this.reps[i];
+            // if rep is null return false
+            if (!rep && rep !== 0) {
+                return false
+            }
+        }
+        return true
+    }
+
+    // check to see if the gaol was reached
+    reachedGoal() {
+        // check each rep to make sure it is not null 
+        for (var i in this.reps) {
+            var rep = this.reps[i];
+            // if rep is null return false
+            if (!rep || rep < this.rep_goal) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+
 
 }
 

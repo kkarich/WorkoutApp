@@ -1,6 +1,6 @@
 import {Injectable} from "angular2/core";
 
-import {IWorkout} from "../interfaces/workout"
+import {IWorkout, Workout} from "../interfaces/workout"
 import {IExercise} from "../interfaces/exercise"
 
 
@@ -13,7 +13,7 @@ export class LogService {
     }
     // use pouchdb to log workout
     logWorkout({_id, _rev, name, index, exercises, completed}) {
-
+        console.log({_id, _rev, name, index, exercises, completed})
         return new Promise((resolve, reject) => {
             // ensure the id and rev work to update otherwise, create a new one with post
             if (_id, _rev) {

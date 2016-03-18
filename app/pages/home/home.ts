@@ -1,5 +1,8 @@
 import {Page,NavController} from 'ionic-framework/ionic';
 
+
+import {IWorkout, Workout} from "../../interfaces/workout"
+
 import{LogService} from '../../services/log';
 import{CurrentWorkoutService} from '../../services/current_workout';
 import{CurrentPlanService} from '../../services/current_plan';

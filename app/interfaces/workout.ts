@@ -21,8 +21,10 @@ export class Workout implements IWorkout {
     exercises;
     completed;
     // Build passed in 
-    constructor({name, exercises,index, plan_id}: IWorkout) {
+    constructor({_id, _rev, name, exercises,index, plan_id}: IWorkout) {
         // init variables
+        this._id = _id;
+        this._rev = _rev;
         this.name = name;
         this.index = index;
         this.plan_id = plan_id;
