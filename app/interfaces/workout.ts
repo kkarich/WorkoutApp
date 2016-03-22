@@ -46,6 +46,8 @@ export class Workout implements IWorkout {
         return new Promise((resolve, reject) => {
             // log workout out and return response
             this.log.logWorkout(this).then((resp) => {
+                // update revission number for future updates (a couchdb/pouchdb thing)
+                this._rev = resp.rev;
                 resolve(resp);
             });
         });

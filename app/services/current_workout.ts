@@ -28,8 +28,8 @@ export class CurrentWorkoutService extends Workout{
     save() {
         return new Promise((resolve, reject) => {
             super.save().then((resp) => {
-                // reinitialize the current workout
-                this.init();
+                // reinitialize the current workout if it is completed
+                if(this.completed) this.init();
                 
                 // return the response
                 resolve(resp);

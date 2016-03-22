@@ -37,6 +37,15 @@ class MyApp {
         this.platform.ready().then(() => {
 
             this.currentWorkout.init();
+            
+            // add pause event listener
+            // currently we are only saving the current workout
+            document.addEventListener("pause", () => {
+                // save the current workout 
+                this.currentWorkout.save();
+                
+            }, false);
+            
             // The platform is now ready. Note: if this callback fails to fire, follow
             // the Troubleshooting guide for a number of possible solutions:
             //
@@ -51,12 +60,6 @@ class MyApp {
             // For example, we might change the StatusBar color. This one below is
             // good for dark backgrounds and light text:
             // StatusBar.setStyle(StatusBar.LIGHT_CONTENT)
-            document.addEventListener("pause", onPause, false);
-
-            function onPause() {
-                // Handle the pause event
-                console.log("pause")
-            }
         });
     }
 
