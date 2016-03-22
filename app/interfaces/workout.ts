@@ -1,4 +1,5 @@
 import {IExercise, Exercise} from "./exercise"
+import {LogService} from '../services/log';
 
 export interface IWorkout {
     _id?: string;
@@ -20,19 +21,33 @@ export class Workout implements IWorkout {
     name;
     exercises;
     completed;
+    log;
     // Build passed in 
-    constructor({_id, _rev, name, exercises,index, plan_id}: IWorkout) {
+    constructor({_id, _rev, name, exercises, index, plan_id}: IWorkout) {
         // init variables
         this._id = _id;
         this._rev = _rev;
         this.name = name;
         this.index = index;
         this.plan_id = plan_id;
-        
+
+        this.log = new LogService();
+
+
         // map excercise 
         this.exercises = exercises.map((exercise) => {
             // generate exercise object from exercise constructor object
-            return new Exercise(exercise); 
+            return new Exercise(exercise);
+        });
+    }
+
+    // log workout and return resp
+    save() {
+        return new Promise((resolve, reject) => {
+            // log workout out and return response
+            this.log.logWorkout(this).then((resp) => {
+                resolve(resp);
+            });
         });
     }
 

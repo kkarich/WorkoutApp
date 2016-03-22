@@ -13,51 +13,57 @@ import {CurrentWorkoutService} from './services/current_workout';
 import {Type} from 'angular2/core';
 
 @App({
-  templateUrl: 'build/app.html',
-  providers:[LogService,CurrentPlanService,CurrentWorkoutService],
-  config: {} // http://ionicframework.com/docs/v2/api/config/Config/
+    templateUrl: 'build/app.html',
+    providers: [LogService, CurrentPlanService, CurrentWorkoutService],
+    config: {} // http://ionicframework.com/docs/v2/api/config/Config/
 })
 class MyApp {
-  rootPage: Type = HomePage;
-  pages: Array<{title: string, component: Type}>
-  currentWorkout:CurrentWorkoutService;
-  constructor(private app: IonicApp, private platform: Platform,currentWorkout:CurrentWorkoutService) {
-    this.initializeApp();
+    rootPage: Type = HomePage;
+    pages: Array<{ title: string, component: Type }>
+    currentWorkout: CurrentWorkoutService;
+    constructor(private app: IonicApp, private platform: Platform, currentWorkout: CurrentWorkoutService) {
+        this.initializeApp();
 
-    this.currentWorkout = currentWorkout;
-    // used for an example of ngFor and navigation
-    this.pages = [
-      { title: 'Getting Started', component: HomePage },
-      { title: 'WorkoutPage', component: WorkoutPage }
-    ];
+        this.currentWorkout = currentWorkout;
+        // used for an example of ngFor and navigation
+        this.pages = [
+            { title: 'Getting Started', component: HomePage },
+            { title: 'WorkoutPage', component: WorkoutPage }
+        ];
 
-  }
+    }
 
-  initializeApp() {
-    this.platform.ready().then(() => {
-        
-      this.currentWorkout.init();
-      // The platform is now ready. Note: if this callback fails to fire, follow
-      // the Troubleshooting guide for a number of possible solutions:
-      //
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      //
-      // First, let's hide the keyboard accessory bar (only works natively) since
-      // that's a better default:
-      //
-      // Keyboard.setAccessoryBarVisible(false);
-      //
-      // For example, we might change the StatusBar color. This one below is
-      // good for dark backgrounds and light text:
-      // StatusBar.setStyle(StatusBar.LIGHT_CONTENT)
-    });
-  }
+    initializeApp() {
+        this.platform.ready().then(() => {
 
-  openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
-    let nav = this.app.getComponent('nav');
-    nav.setRoot(page.component);
-  }
+            this.currentWorkout.init();
+            // The platform is now ready. Note: if this callback fails to fire, follow
+            // the Troubleshooting guide for a number of possible solutions:
+            //
+            // Okay, so the platform is ready and our plugins are available.
+            // Here you can do any higher level native things you might need.
+            //
+            // First, let's hide the keyboard accessory bar (only works natively) since
+            // that's a better default:
+            //
+            // Keyboard.setAccessoryBarVisible(false);
+            //
+            // For example, we might change the StatusBar color. This one below is
+            // good for dark backgrounds and light text:
+            // StatusBar.setStyle(StatusBar.LIGHT_CONTENT)
+            document.addEventListener("pause", onPause, false);
+
+            function onPause() {
+                // Handle the pause event
+                console.log("pause")
+            }
+        });
+    }
+
+    openPage(page) {
+        // Reset the content nav to have just this page
+        // we wouldn't want the back button to show in this scenario
+        let nav = this.app.getComponent('nav');
+        nav.setRoot(page.component);
+    }
 }

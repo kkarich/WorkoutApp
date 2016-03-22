@@ -33,12 +33,11 @@ export class WorkoutPage {
     }
 
     // save the workout
-    save() {
-        this.workout.completed = true;
-
-        // pass in this workout to log save method
-        this.log.logWorkout(this.workout).then((resp) => {
-            this.workout.init();
+    save(completed: boolean) {
+        if (completed) this.workout.completed = completed;
+        
+        // save workout, then handle screen. Right now that is just popping off the top element
+        this.workout.save().then((resp) => {
             this.nav.pop();
         });
     }
