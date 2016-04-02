@@ -63,16 +63,18 @@ export class WorkoutPage {
     handleCompletedExercise(exercise) {
         console.log("COMPLETED")
         if (exercise.reachedGoal()) {
-            exercise.message = "Nice job";
+            exercise.suggested_weight = exercise.weight;
+            exercise.message = 'Nice job! Suggested Weight:';
 
         } else {
-            exercise.message = "Better luck next time";
+            exercise.suggested_weight = exercise.weight;
+            exercise.message = "Better luck next time. Suggested Weight:";
 
         }
     }
 
     // prompt to adjust weight for clicked exercise
-    adjustWeightPrompt(exercise) {
+    adjustWeightPrompt(exercise, property) {
         let prompt = Alert.create({
             title: 'Adjust Weight',
             message: "",
@@ -80,7 +82,7 @@ export class WorkoutPage {
                 {
                     type: 'number',
                     name: 'weight',
-                    value: exercise.weight,
+                    value: exercise[property],
                 },
             ],
             buttons: [
@@ -94,7 +96,7 @@ export class WorkoutPage {
                     text: 'Update',
                     handler: data => {
                         console.log('Saved clicked', data);
-                        exercise.weight = data.weight;
+                        exercise[property] = data.weight;
                     }
                 }
             ]
@@ -145,7 +147,9 @@ export class WorkoutPage {
         if (value && value != this.workout.index) {
             // get workout by index and set it to current workout.
             // we need to parse int to ensure we are not initing it with a string
-            this.workout.set(this.plan.getWorkout(parseInt(value)));
+            this.plan.getWorkout(parseInt(value)).then(workout => {
+                this.workout.set(new Workout(workout));
+            })
         }
     }
 }

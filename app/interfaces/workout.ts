@@ -24,6 +24,8 @@ export class Workout implements IWorkout {
     log;
     // Build passed in 
     constructor({_id, _rev, name, exercises, index, plan_id}: IWorkout) {
+        
+        console.log("WORKOUT")
         // init variables
         this._id = _id;
         this._rev = _rev;

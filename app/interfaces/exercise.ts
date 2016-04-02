@@ -6,6 +6,7 @@ export interface IExercise {
     set_goal: number;
     weight?: number;
     reps?: Array<number>;
+    suggested_weight?: number;
 }
 
 export class Exercise implements IExercise {
@@ -16,6 +17,8 @@ export class Exercise implements IExercise {
     set_goal;
     weight;
     reps;
+    suggested_weight;
+    
     constructor({exercise_id, name, rep_goal, set_goal, reps, weight}: IExercise) {
         // init properties
         this.name = name;
@@ -56,10 +59,6 @@ export class Exercise implements IExercise {
         }
         return true;
     }
-
-
-
-
 }
 
 // init array should init an array with length 'length' initialized with null values

@@ -7,7 +7,7 @@ import {LogService} from "./log"
 import {CurrentPlanService} from "./current_plan"
 
 @Injectable()
-export class CurrentWorkoutService extends Workout{
+export class CurrentWorkoutService extends Workout {
     currentPlan: CurrentPlanService;
     log: LogService;
     _id: String;
@@ -19,7 +19,7 @@ export class CurrentWorkoutService extends Workout{
     completed: Boolean;
 
     constructor(CurrentPlan: CurrentPlanService, log: LogService) {
-        super({plan_id:null, exercises:[],name:null});
+        super({ plan_id: null, exercises: [], name: null });
         this.currentPlan = CurrentPlan;
         this.log = log;
 
@@ -29,24 +29,27 @@ export class CurrentWorkoutService extends Workout{
         return new Promise((resolve, reject) => {
             super.save().then((resp) => {
                 // reinitialize the current workout if it is completed
-                if(this.completed) this.init();
-                
+                if (this.completed) this.init();
+
                 // return the response
                 resolve(resp);
             });
         });
     }
-    
+
     // init workout service
     init() {
         // look for current workout
-        this.log.getCurrentWorkout().then((response:{workout?:IWorkout,index?:number}) => {
+        this.log.getCurrentWorkout().then((response: { workout?: IWorkout, index?: number }) => {
             // if the workout exists in the response use that to set it
             // otherwise, use the index found to build the next workout
             if (response.workout) {
                 this.set(new Workout(response.workout));
             } else {
-                this.set(new Workout(this.currentPlan.getWorkout(response.index + 1)));
+                this.currentPlan.getWorkout(response.index + 1).then(workout => {
+                    this.set(new Workout(workout));
+
+                })
             }
         })
 

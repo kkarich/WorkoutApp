@@ -12,7 +12,7 @@
         <ion-card-content>
             <div class="information-container">
                 <span>{{exercise.name}}</span>
-                <span (click)="adjustWeightPrompt(exercise)">{{exercise.set_goal}}x{{exercise.rep_goal}} {{exercise.weight || 0}} lb's</span>
+                <span (click)="adjustWeightPrompt(exercise, 'weight')">{{exercise.set_goal}}x{{exercise.rep_goal}} {{exercise.weight || 0}} lb's</span>
             </div>
             <div *ngIf="!exercise.message" class="button-container">
                 <button 
@@ -22,9 +22,8 @@
                     *ngFor="#rep of exercise.reps; #repIndex = index">{{rep}}
                 </button>
             </div>
-            
             <div *ngIf="exercise.message">
-                {{exercise.message}}
+                {{exercise.message}} <span (click)="adjustWeightPrompt(exercise, 'suggested_weight')">{{exercise.suggested_weight || 0}} lb's</span>
             </div>
         </ion-card-content>
 

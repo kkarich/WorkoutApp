@@ -1,6 +1,10 @@
 import {Injectable} from "angular2/core";
 
 import {IWorkout, Workout} from "../interfaces/workout"
+
+import {LogService} from "./log"
+
+
 @Injectable()
 export class CurrentPlanService {
     _id: String;
@@ -8,7 +12,9 @@ export class CurrentPlanService {
     name: String;
     description: String;
     workouts: Array<IWorkout>;
-    constructor() {
+    log: LogService;
+    constructor(log: LogService) {
+        this.log = log;
         this._id = "9a37c055b6b221b2c66fa543fc87188d";
         this._rev = "4-be013c7a98e049f3914a455a6394c94c";
         this.name = "PHUL";
@@ -191,24 +197,37 @@ export class CurrentPlanService {
         ]
     }
     // get next workout out if index is passed in, otherwas get first workout
-    getWorkout(index?: number): IWorkout {
-        // if this.workouts does not exist, return empty object
-        if (this.workouts.length < 1) {
-            return;
-        }
-        // init next workout
-        var workout: IWorkout;
-        // if index exists and it is not the last element in array, return next workout.
-        // Otherwise, return first workout
-        if (index !== null && index < this.workouts.length) {
-            workout = this.workouts[index];
-            workout.index = index;
-        } else {
-            workout = this.workouts[0];
-            workout.index = 0;
-        }
-        // pass the next workout to the build workout function and its value
-        return new Workout(workout);
+    getWorkout(index?: number) {
+        return new Promise((resolve, reject) => {
+            // if this.workouts does not exist, return empty object
+            if (this.workouts.length < 1) {
+                return;
+            }
+            // init next workout
+            var workout: IWorkout;
+            // if index exists and it is not the last element in array, return next workout.
+            // Otherwise, return first workout
+            if (index !== null && index < this.workouts.length) {
+                workout = this.workouts[index];
+                workout.index = index;
+            } else {
+                workout = this.workouts[0];
+                workout.index = 0;
+            }
+            
+            // get the last workout in the plan that we logged
+            this.log.getPreviousWorkout(workout.index).then(response => {
+                if (response) {
+                    // if the response is truthy (contains a workout)
+                    // update the workout exercises with the suggested weight from the last workout
+                    workout.exercises.map((exercise, index) => {
+                        exercise.weight = response.exercises[index].suggested_weight;
+                    });
+                }
+                // pass the next workout to the build workout function and its value
+                resolve(workout);
+            })
+        });
     }
 
 }
